@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>game</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+<!--<button (click)="draw()">Draw </button>-->
+
+  <!--<div *ngFor="let card of drawn">-->
+    <!--<app-card [value]="card.value" [image]="card.image" [suit]="card.suit" [code]="card.code"></app-card>-->
+  <!--</div>-->
+  <div id="main-content">
+
+  <div id = "gamearea">
+
+  <div #dealer id="dealer" class="card-box">
+    <div class="card-info">
+<ion-button (click)="reset()" [disabled]="!playerStand || !dealerStand"> Reset </ion-button>
+    </div>
+
+    <div class="card-container">
+    <app-card  *ngFor="let card of dealerCards; let i = index" [gameCard]="card" [ngStyle]="{'z-index':cardStyle(i)}"></app-card>
+    </div>
+
+    <div class="card-info">
+      <div class="score">
+      Dealer: <ion-badge> {{dealerScore}} </ion-badge>
+      </div>
+    </div>
+
+  </div>
+
+
+    <div #action id="action">
+      <ion-button shape="round" color="primary" fill="outline" class="gamebtn" [disabled]="playerStand" (click)="playerPlay()"> Hit </ion-button>
+      <ion-button shape="round" color="primary" fill="outline" class="gamebtn" [disabled]="playerStand" (click)="dealerPlay()"> Stand </ion-button>
+    </div>
+
+  <div #player id="player" class="card-box">
+    <div class="card-info">
+
+    </div>
+
+    <div class="card-container">
+    <app-card  *ngFor="let card of playerCards" [gameCard]="card" [ngStyle]="{'z-index':cardStyle(i)}"></app-card>
+    </div>
+
+    <div class="card-info">
+      <div class="score">
+      Player: <ion-badge> {{playerScore}} </ion-badge>
+    </div>
+    </div>
+  </div>
+
+  </div>
+
+  </div>
+
+
+
+
+</ion-content>

@@ -1,0 +1,10 @@
+img {
+  max-width:10em;
+  height:auto;
+}
+
+@media only screen and (orientation: landscape) {
+  img {
+    max-height:7em;
+  }
+}

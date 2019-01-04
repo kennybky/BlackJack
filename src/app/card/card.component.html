@@ -1,0 +1,10 @@
+<!--<div (click)="gameCard.flipped = !gameCard.flipped">-->
+  <div>
+<span *ngIf="gameCard.flipped; else back">
+  <img src="{{gameCard.card.image}}"/>
+</span>
+
+<ng-template #back>
+  <img src="../../assets/back.png"/>
+</ng-template>
+</div>

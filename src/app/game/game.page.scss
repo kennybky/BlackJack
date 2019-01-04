@@ -1,0 +1,91 @@
+.card-box {
+  position:relative;
+  display:flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+  height:40%;
+}
+
+.card-container {
+  display:flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  width:40%;
+  height:100%;
+}
+.card-info {
+  position:relative;
+  width:30%;
+  height:100%;
+}
+
+.score {
+  position:absolute;
+  left:5%;
+  top:40%;
+  padding:0.2em;
+}
+
+.score ion-badge {
+  vertical-align: middle;
+}
+
+#action {
+  display:flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-around;
+  position:relative;
+  height:20%;
+}
+
+
+
+#gamearea {
+  position: relative;
+  width:99%;
+  height:99%;
+  box-sizing: border-box;
+  background:hsl(215, 100%, 99%);
+  display:flex;
+  flex-flow:column;
+  justify-content:space-evenly;
+}
+
+.gamebtn {
+  position: relative;
+}
+
+#main-content {
+  position:absolute;
+  top:2%;
+  bottom:2%;
+  left:1%;
+  right:1%;
+  display:flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
+
+.side-panel {
+  position:relative;
+  width:30%;
+  height:99vh;
+}
+
+app-card {
+  transform: rotateZ(-5deg);
+  display:inline-block;
+  margin-left:-8em;
+}
+
+app-card:last-child {
+  transform: none;
+}
+
+@media only screen and (orientation: landscape) {
+  app-card {
+    margin-left: -4em;
+  }
+}
