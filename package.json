@@ -1,8 +1,8 @@
 {
-  "name": "example",
+  "name": "blackjack",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Adekola Togunloju",
+  "homepage": "kennybky.com",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
