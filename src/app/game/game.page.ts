@@ -3,6 +3,7 @@ import {CardService} from '../services/card.service';
 import {Deck} from '../models/deck';
 import {Card} from '../models/card';
 import {GameCard} from '../models/game-card';
+import {DeckService} from '../services/deck.service';
 
 @Component({
   selector: 'app-game',
@@ -13,6 +14,8 @@ export class GamePage implements OnInit {
 
  decks = [] as Array<Deck>;
  currentDeck: any;
+
+denum = [1, 5, 20, 50, 100, 200, 500, 1000, 2000, 5000];
  drawn = [];
  dealerCards  = [] as GameCard[];
  playerCards = [] as GameCard[];
@@ -20,34 +23,39 @@ export class GamePage implements OnInit {
  dealerScore = 0 as number;
  playerStand = false as boolean;
  dealerStand = false as boolean;
+ dealerMoney: number;
+ playerMoney: number;
+ betAmt = 5;
+ betLocked: boolean;
+    protected playerBet: number;
 
-    constructor(private card: CardService) {
+    constructor(private deck: DeckService) {
         this.initialize();
-        this.startGame();
     }
 
     async initialize() {
-        const deck = await this.card.getShuffledDeck();
+        const deck = this.deck.getShuffledDeck();
         this.decks.push(deck);
         this.currentDeck = deck;
+        this.playerMoney = 1000;
     }
 
     async draw() {
-    const result = await this.card.drawCard(this.currentDeck.deck_id);
+    const result = this.deck.drawCard(this.currentDeck.deck_id);
     result.cards.forEach((card) => {
         this.drawn.push(card);
     });
     }
 
     async drawCard(deck: Deck): Promise<Card> {
-        const result = await this.card.drawCard(deck.deck_id);
+        const result = this.deck.drawCard(deck.deck_id);
         return result.cards[0];
     }
 
    async startGame() {
         this.dealerCards = [];
         this.playerCards = [];
-        const deck = await this.card.getShuffledDeck();
+        const deck = this.deck.getShuffledDeck();
         this.decks.push(deck);
         this.currentDeck = deck;
        await this.dealToDealer(2, 1);
@@ -62,7 +70,7 @@ export class GamePage implements OnInit {
 
 
      async dealToPlayer(n = 1, flip = 0) {
-         const result = await this.card.drawCard(this.currentDeck.deck_id, n);
+         const result = this.deck.drawCard(this.currentDeck.deck_id, n);
          result.cards.forEach((card) => {
              let flipped = true;
              if (flip > 0) {
@@ -76,7 +84,7 @@ export class GamePage implements OnInit {
     }
 
    async dealToDealer(n = 1, flip = 0) {
-       const result = await this.card.drawCard(this.currentDeck.deck_id, n);
+       const result = this.deck.drawCard(this.currentDeck.deck_id, n);
        result.cards.forEach((card) => {
            let flipped = true;
            if (flip > 0) {
@@ -116,6 +124,7 @@ export class GamePage implements OnInit {
                         if (this.dealerScore >= 17 && (this.dealerScore >= this.playerScore || this.playerScore > 21)) {
                             this.dealerStand = true;
                             done = true;
+                            this.watchGame();
                         }
                     }
                 });
@@ -155,6 +164,37 @@ export class GamePage implements OnInit {
 
     endGame(winner) {
         // do something with the winner;
+        console.log(winner);
+        if (winner === 'player') {
+            this.playerMoney += (this.playerBet * 2);
+        } else if (winner === 'draw') {
+            this.playerMoney += this.playerBet;
+        }
+    }
+
+    bet(amount: number) {
+       this.betAmt = 0;
+       this.betLocked = true;
+       this.playerBet = amount;
+       this.playerMoney -= amount;
+       this.startGame();
+    }
+
+    awardChip(amount: number): Array<number> {
+        if (amount === 0) {
+            return [];
+        } else if (amount === 1) {
+            return [1];
+        } else if (amount === 5) {
+            return [5];
+        } else {
+           for (let i = this.denum.length - 1; i >= 0; i--) {
+               if (this.denum[i] <= amount) {
+                   const balance = amount - this.denum[i];
+                  return [this.denum[i]].concat(this.awardChip(balance));
+               }
+           }
+        }
     }
 
     reset() {
@@ -164,7 +204,8 @@ export class GamePage implements OnInit {
         this.dealerStand = false;
         this.playerCards = [];
         this.dealerCards = [];
-        this.startGame();
+        this.playerBet = 0;
+        this.betLocked = false;
     }
 
    updatePlayerScore(gameCard: GameCard) {

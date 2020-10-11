@@ -4,28 +4,38 @@ import {HttpClient} from '@angular/common/http';
 import {Deck} from '../models/deck';
 import {CardResponse} from '../models/card-response';
 import {Card} from '../models/card';
+import {DeckService} from './deck.service';
+
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CardService {
 
-  constructor(private http: HttpClient) { }
 
 
-  getShuffledDeck (count = 1): Promise<Deck> {
-    return this.http.get<Deck>(`${url.base}/deck/new/shuffle/?deck_count=${count}`).toPromise();
-  }
+    constructor(private http: HttpClient, private deck: DeckService) { }
 
-  getNewDeck(): Promise<Deck> {
-    return this.http.get<Deck>(`${url.base}/deck/new/`).toPromise();
-  }
 
-  drawCard(deck: string, count = 1): Promise<CardResponse> {
-    return this.http.get<CardResponse>(`https://deckofcardsapi.com/api/deck/${deck}/draw/?count=${count}`).toPromise();
-  }
+    getShuffledDeck (count = 1): Promise<Deck> {
+        return this.http.get<Deck>(`${url.base}/deck/new/shuffle/?deck_count=${count}`).toPromise();
+    }
 
-  shuffle(deck: string): Promise<Deck> {
-    return this.http.get<Deck>(`https://deckofcardsapi.com/api/deck/${deck}/shuffle/`).toPromise();
-  }
+    getNewDeck(shuffle = false, count = 1): Promise<Deck> {
+        return this.http.get<Deck>(`${url.base}/deck/new/`).toPromise();
+    }
+
+
+
+    drawCard(deck: string, count = 1): Promise<CardResponse> {
+        return this.http.get<CardResponse>(`https://deckofcardsapi.com/api/deck/${deck}/draw/?count=${count}`).toPromise();
+    }
+
+    shuffle(deck: string): Promise<Deck> {
+        return this.http.get<Deck>(`https://deckofcardsapi.com/api/deck/${deck}/shuffle/`).toPromise();
+    }
+
+
+
+
 }

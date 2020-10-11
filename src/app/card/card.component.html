@@ -1,10 +1,30 @@
-<!--<div (click)="gameCard.flipped = !gameCard.flipped">-->
-  <div>
-<span *ngIf="gameCard.flipped; else back">
-  <img src="{{gameCard.card.image}}"/>
-</span>
 
-<ng-template #back>
-  <img src="../../assets/back.png"/>
-</ng-template>
-</div>
+
+
+
+
+
+  <span *ngIf="gameCard.flipped; else back">
+  <img [src]="'../../assets/cards/'+ gameCard.card.code  +'.png'"/>
+  </span>
+
+  <!--<ng-template #back>-->
+  <!--<img class="card-back" src="{{gameCard.card.image}}"/>-->
+<!--</ng-template>-->
+
+  <ng-template #back>
+    <img src="../../assets/cards/back_card.png"/>
+  </ng-template>
+
+<!--<svg height="0" xmlns="http://www.w3.org/2000/svg">-->
+  <!--<filter id="drop-shadow">-->
+    <!--<feGaussianBlur in="SourceAlpha" stdDeviation="3"/>-->
+    <!--<feOffset dx="0" dy="0" result="offsetblur"/>-->
+    <!--<feFlood flood-color="rgba(0,0,0,0.4)"/>-->
+    <!--<feComposite in2="offsetblur" operator="in"/>-->
+    <!--<feMerge>-->
+      <!--<feMergeNode/>-->
+      <!--<feMergeNode in="SourceGraphic"/>-->
+    <!--</feMerge>-->
+  <!--</filter>-->
+<!--</svg>-->

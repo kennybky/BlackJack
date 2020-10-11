@@ -34,8 +34,25 @@
 
 
     <div #action id="action">
-      <ion-button shape="round" color="primary" fill="outline" class="gamebtn" [disabled]="playerStand" (click)="playerPlay()"> Hit </ion-button>
-      <ion-button shape="round" color="primary" fill="outline" class="gamebtn" [disabled]="playerStand" (click)="dealerPlay()"> Stand </ion-button>
+      <ion-button shape="round" color="primary" fill="solid" class="gamebtn" [disabled]="playerStand || !betLocked" (click)="playerPlay()"> Hit </ion-button>
+      <ion-button shape="round" color="danger" fill="solid" class="gamebtn" [disabled]="playerStand || !betLocked" (click)="dealerPlay()"> Stand </ion-button>
+    </div>
+
+    <div #betChip id="betChip">
+      <div *ngIf="!betLocked else pBet">
+      <ion-range min="5" [max]="playerMoney" step="5" pin="true" [(ngModel)]="betAmt" color="dark"></ion-range>
+      <ion-button color="light" fill="solid" class="gamebtn" [disabled]="playerStand || betLocked" (click)="bet(betAmt)"> Bet </ion-button>
+      <ion-badge color="primary" id="betText" margin-end="auto">Bet: {{betAmt}}</ion-badge>
+      </div>
+
+      <ng-template #pBet padding margin>
+        <ion-text color="success">
+          <h4> You Bet: {{playerBet}}</h4>
+        </ion-text>
+        <div id="chips">
+        <app-chip *ngFor="let value of awardChip(playerBet)" [value]="value"></app-chip>
+        </div>
+      </ng-template>
     </div>
 
   <div #player id="player" class="card-box">
@@ -44,13 +61,18 @@
     </div>
 
     <div class="card-container">
-    <app-card  *ngFor="let card of playerCards" [gameCard]="card" [ngStyle]="{'z-index':cardStyle(i)}"></app-card>
+    <app-card  *ngFor="let card of playerCards; let i = index" [gameCard]="card" [ngStyle]="{'z-index':cardStyle(i)}"></app-card>
     </div>
 
     <div class="card-info">
       <div class="score">
       Player: <ion-badge> {{playerScore}} </ion-badge>
     </div>
+      <ion-text>
+      <h4>
+        Bank: ${{playerMoney}}
+      </h4>
+      </ion-text>
     </div>
   </div>
 

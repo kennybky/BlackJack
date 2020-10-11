@@ -11,9 +11,20 @@ export class CardComponent implements OnInit {
 
   public flipped = false as boolean;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  symbols(s) {
+const x = parseInt(s, 10);
+if (isNaN(x)) {
+  return new Array(1).fill(0);
+} else {
+  return new Array(x).fill(0);
+}
+
   }
 
 }

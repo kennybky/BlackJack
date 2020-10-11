@@ -10,6 +10,62 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
+//@media screen and (min-width: 993px) {
+//  :root {
+//    font-size: 24px;
+//  }
+//}
+//
+//@media screen and (max-width:992px) and (min-width:768px) {
+//  :root {
+//    font-size: 20px;
+//  }
+//}
+//
+//@media screen and (max-width:767px) and (min-width:600px) {
+//  :root {
+//    font-size: 16px;
+//  }
+//}
+//
+//
+//@media screen and (max-width:600px) {
+//  :root {
+//    font-size: 12px;
+//  }
+//}
+
+
+
 :root {
-  font-size:2vw;
+  font-size: 2vw;
+  --card-padding: 0.16em;
+  --card-width: 10.5em;
+  --card-height: 14em;
+}
+
+
+
+@media screen and (orientation: landscape) {
+:root {
+  font-size:1.2vw;
+}
+
+  @media screen and (min-aspect-ratio:21/9 ) {
+    :root {
+      font-size:0.6vw;
+    }
+  }
+
+  @media screen and (min-aspect-ratio:18/9 ) {
+    :root {
+      font-size:0.8vw;
+    }
+  }
+
+  @media screen and (min-aspect-ratio:16/9 ) {
+    :root {
+      font-size:1vw;
+    }
+  }
 }
